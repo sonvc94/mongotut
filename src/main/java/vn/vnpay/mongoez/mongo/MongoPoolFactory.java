@@ -9,20 +9,18 @@ public class MongoPoolFactory extends BasePooledObjectFactory<MongoClient> {
 
     @Override
     public MongoClient create() throws Exception {
-        System.out.println("Create on factory");
-        MongoClient mongoClient =  MongoManager.getInstance().getMongoClient();
+        MongoClient mongoClient = MongoManager.getInstance().createNewConnection();
         return mongoClient;
     }
 
     @Override
     public PooledObject<MongoClient> wrap(MongoClient t) {
-        return new DefaultPooledObject<MongoClient>(t);
+        return new DefaultPooledObject<>(t);
     }
 
 
     @Override
     public void destroyObject(PooledObject<MongoClient> p) throws Exception {
-        System.out.println("close in factory");
         p.getObject().close();
     }
 }

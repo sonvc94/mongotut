@@ -8,6 +8,7 @@ public class MongoPool {
 
     private GenericObjectPool<MongoClient> pool;
 
+
     public static class SingletonHolder {
         public static final MongoPool instance = new MongoPool();
     }
@@ -18,16 +19,14 @@ public class MongoPool {
 
     public synchronized void start() {
         try {
-            System.out.println("start");
             GenericObjectPoolConfig config = new GenericObjectPoolConfig();
-            config.setMaxTotal(100);
-            config.setMinIdle(30);
-            config.setMaxIdle(50);
+            config.setMaxTotal(20);
+            config.setMinIdle(1);
+            config.setMaxIdle(5);
             config.setBlockWhenExhausted(true);
-            config.setMaxWaitMillis(6000);
+            config.setMaxWaitMillis(60000);
             pool = new GenericObjectPool<>(new MongoPoolFactory(), config);
-            System.out.println("idle: " + pool.getNumIdle());
-        } catch (Throwable e){
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -41,6 +40,8 @@ public class MongoPool {
         }
         try {
             MongoClient mongoClient = pool.borrowObject();
+            System.out.println("NumActive : " + pool.getNumActive());
+            System.out.println("NumIdle: " + pool.getNumIdle());
             return mongoClient;
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,9 +49,15 @@ public class MongoPool {
         return null;
     }
 
-    public void returnMongo(MongoClient mongoClient) {
+    public synchronized void returnMongo(MongoClient mongoClient) {
         if (mongoClient != null) {
             pool.returnObject(mongoClient);
+        }
+    }
+
+    public synchronized void close() {
+        if (pool != null) {
+            pool.close();
         }
     }
 
