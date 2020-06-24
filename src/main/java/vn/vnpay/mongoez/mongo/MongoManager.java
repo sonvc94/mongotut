@@ -20,7 +20,7 @@ public class MongoManager {
 
     public MongoClient createNewConnection() {
         ConnectionString connString = new ConnectionString(
-                "mongodb://mongotut:mongotut@35.247.136.81:27017/mongotut?sauthSource=authSource"
+                "mongodb://mongotut:mongotut@35.247.136.81:27017/mongotut"
         );
         MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(connString)

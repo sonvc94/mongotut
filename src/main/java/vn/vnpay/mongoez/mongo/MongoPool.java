@@ -20,9 +20,9 @@ public class MongoPool {
     public synchronized void start() {
         try {
             GenericObjectPoolConfig config = new GenericObjectPoolConfig();
-            config.setMaxTotal(20);
-            config.setMinIdle(1);
-            config.setMaxIdle(5);
+            config.setMaxTotal(100);
+            config.setMinIdle(10);
+            config.setMaxIdle(20);
             config.setBlockWhenExhausted(true);
             config.setMaxWaitMillis(60000);
             pool = new GenericObjectPool<>(new MongoPoolFactory(), config);
