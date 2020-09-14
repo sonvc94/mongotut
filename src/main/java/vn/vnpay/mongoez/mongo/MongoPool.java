@@ -8,7 +8,6 @@ public class MongoPool {
 
     private GenericObjectPool<MongoClient> pool;
 
-
     public static class SingletonHolder {
         public static final MongoPool instance = new MongoPool();
     }
