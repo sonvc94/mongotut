@@ -1,0 +1,26 @@
+db.document_test.find({"author": "sonvc"})
+db.qr_transaction.find({debitAmount: {$lt: 461000}})
+db.qr_transaction.find({$or: [{debitAmount: "460000"}, {debitAmount: {$lt: 4610000}}]})
+db.qr_transaction.find()
+db.qr_transaction.insertOne(
+    {
+        token: "738585711703232122",
+        masterMC: "A000000775",
+        merchantCode: "777117117",
+        terminalId: "T1HNQ117",
+        mobile: "0777118119",
+        payDate: "20200731093558",
+        debitAmount: 120000,
+        traceTransfer: "522311",
+        tipAndFee: "0",
+        qrInfo: "8505435056303161584F0639373034313950084167726962616E6B63445722304433313037443132334432303037333130393530343830333536373537343231469F241D313931303033353637353734323130303030303030303030303030303062355F200E444F414E204D494E48204855414E5F2D0276699F080231305F501074656C3A2B38343335363735373432319F250430303030",
+        userName: "0777118118",
+        messageType: "NOTIFICATION",
+        voucherCode: "",
+        mobileId: "502",
+        clientId: "1329"
+    }
+)
+
+
+db.inventory.find();
